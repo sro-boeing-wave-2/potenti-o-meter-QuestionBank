@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+
+h1{
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.example-container {
+  height: 400px;
+  overflow: auto;
+}
+table{
+  width:100%;
+  table-layout: fixed;
+  background-color: transparent;
+}
+th,td,tr {
+  color: #fff;
+  font-size: 16px;
+}
+
+mat-paginator{
+  background-color: transparent;
+  color: #fff;
+}
+
+
+/* demo styles */
+section{
+  font-family: 'Roboto', sans-serif;
+  margin: 50px;
+}

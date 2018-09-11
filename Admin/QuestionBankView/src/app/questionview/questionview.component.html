@@ -1,0 +1,54 @@
+<section>
+    <!--for demo wrap-->
+    <h1>Question Bank</h1>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> Question </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionText}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Difficulty Level </th>
+            <td mat-cell *matCellDef="let element"> {{element.difficultyLevel}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Domain </th>
+            <td mat-cell *matCellDef="let element"> {{element.domain}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Concepts </th>
+            <td mat-cell *matCellDef="let element"> {{element.conceptTags}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+              <button mat-icon-button color="primary" (click)="addNew()">
+                 <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+              </button>
+            </th>
+
+            <td mat-cell *matCellDef="let row; let i=index;">
+              <button mat-icon-button (click)="startEdit(row);$event.stopPropagation()">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteItem(row);$event.stopPropagation()">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"  showFirstLastButtons></mat-paginator>
+      </div>
+  </section>
+

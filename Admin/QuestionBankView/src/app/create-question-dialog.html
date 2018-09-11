@@ -1,0 +1,52 @@
+<section id="dialog">
+  <section id="close-button">
+    <button (click)="close()" mat-icon-button md-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </section>
+  <section id="form">
+    <mat-form-field id="select">
+      <mat-select [(ngModel)]="selectedOption" placeholder="Question type">
+        <mat-option *ngFor="let question of Questions" [value]="question.value">
+          {{question.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <mat-form-field id="input">
+      <input matInput placeholder="Difficulty level" type="number">
+    </mat-form-field> -->
+  </section>
+  <div class="fileDropTarget">
+    <div>
+      <input type="file" #fileImportInput name="File Upload" id="txtFileUpload" (change)="fileChangeListener($event)" accept=".csv" multiple id="inputAddFiles" />
+    </div>
+  </div>
+  <section>
+    <button id="CreateQuestion" mat-raised-button color="accent" (click)="Submit()">
+      Submit
+    </button>
+  </section>
+  <!-- <div *ngFor="let csvData of csvRecords;let i = index;">
+    {{csvData.questionText}}
+  </div> -->
+</section>
+
+
+
+
+
+  <!-- Whole functionality to be used later-->
+  <!-- <section>
+    <ng-container *ngIf="selectedOption == trueFalse; else elseif1">
+      <mat-form-field class="QuestionText">
+        <textarea matInput id="QuestionText" maxlength="256" placeholder="Question"></textarea>
+      </mat-form-field>
+    </ng-container>
+  </section>
+  <ng-template #elseif1>
+    <ng-container *ngIf="selectedOption === 99; else elseif2">bar === 99</ng-container>
+  </ng-template>
+  <ng-template #elseif2>
+    <ng-container *ngIf="selectedOption === 2; else else1">foo === 2</ng-container>
+  </ng-template>
+  <ng-template #else1></ng-template> -->

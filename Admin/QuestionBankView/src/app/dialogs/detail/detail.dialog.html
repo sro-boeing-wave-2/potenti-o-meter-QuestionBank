@@ -1,0 +1,44 @@
+<div class="container">
+  <h3 mat-dialog-title>Detail Question View</h3>
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Domain" [(ngModel)]="data.row.domain" value= "data.row.domain" name="domain" required >
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Difficulty" [(ngModel)]="data.row.difficultyLevel" value= "data.row.difficultyLevel" name="difficultyLevel" required >
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Question" [(ngModel)]="data.row.questionText" value= "data.row.questionText" name="questionText" required >
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Correct Answer" [(ngModel)]="data.row.correctOption" value= "data.row.correctOption" name="correctOption" required >
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Concept Tags" [(ngModel)]="data.row.conceptTags" value= "data.row.conceptTags" name="Concept Tags" required>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input [disabled] = "data.isDiabled" matInput #input class="form-control" placeholder="Options" [(ngModel)]="data.row.optionList[0].option" value= "data.row.optionList[0].option" name="Options" required>
+      </mat-form-field>
+    </div>
+
+    <button mat-stroked-button color="primary" (click)="SaveData(data.row)"  *ngIf="!data.isDiabled">
+      Save
+    </button>
+  </form>
+</div>

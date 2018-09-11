@@ -1,0 +1,275 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0",
+    "title": "Admin",
+    "description": "The master control for the entire project."
+  },
+  "definitions": {
+    "Question": {
+      "type": "object",
+      "required": [
+        "questionId",
+        "questionText",
+        "domain",
+        "difficultyLevel",
+        "correctOption",
+        "options"
+      ],
+      "properties": {
+        "questionId": {
+          "type": "string"
+        },
+        "questionText": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "FirstOption": {
+              "type": "string"
+            },
+            "SecondOption": {
+              "type": "string"
+            },
+            "ThirdOption": {
+              "type": "string"
+            },
+            "FourthOption": {
+              "type": "string"
+            }
+          }
+        },
+        "difficultyLevel": {
+          "type": "integer"
+        },
+        "conceptTags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "correctOption": {
+          "type": "object",
+          "properties": {
+            "SingleCorrect": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/questions": {
+      "get": {
+        "description": "Gets all the question which needs to be delivered to user.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Question"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new question.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Question",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "questionText": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "string"
+                },
+                "options": {
+                  "type": "object",
+                  "properties": {
+                    "FirstOption": {
+                      "type": "string"
+                    },
+                    "SecondOption": {
+                      "type": "string"
+                    },
+                    "ThirdOption": {
+                      "type": "string"
+                    },
+                    "FourthOption": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "difficultyLevel": {
+                  "type": "integer"
+                },
+                "correctOption": {
+                  "type": "object",
+                  "properties": {
+                    "SingleCorrect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/questions/difficulty/{difficultyLevel}": {
+      "get": {
+        "description": "Gets all the question of specific difficulty.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "difficultyLevel",
+            "required": true,
+            "type": "integer",
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Question"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/questions/domain/{domain}": {
+      "get": {
+        "description": "Gets all the question of specific domain.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "domain",
+            "required": true,
+            "type": "string",
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Question"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/delete/domain/{domain}": {
+      "delete": {
+        "description": "Delete all the question of specific domain.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "domain",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Domain Not Found"
+          }
+        }
+      }
+    },
+    "/delete/id/{questionId}": {
+      "delete": {
+        "description": "Delete a specific question of id questionId.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "questionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Id not found"
+          }
+        }
+      }
+    },
+    "/update/{questionId}": {
+      "put": {
+        "description": "Updates a question.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "questionId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Question",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Question"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Id not found"
+          }
+        }
+      }
+    }
+  }
+}

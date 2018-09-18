@@ -92,12 +92,13 @@ namespace Admin.Models
     {
        [BsonElement("questionText")]
        public string questionText { get; set; }
-       
-       [BsonElement("correctResponse")]
-       public string correctResponse { get; set; }
-       
-       [BsonRequired]
-       public string Input { get; set; }
+
+        [BsonElement("correctOptionList")]
+        [JsonProperty("correctOptionList")]
+        public List<correctOption> CorrectOptionList { get; set; }
+
+        //[BsonRequired]
+        //public string Input { get; set; }
     }
 
     [BsonDiscriminator("trueFalse")]

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using MongoDB.Bson.Serialization;
 using Microsoft.Extensions.Options;
 using Admin.Models;
+using Potentiometer.Core.QuestionTypes;
 namespace Admin.Data
 {
     public class QuestionContext
@@ -17,6 +19,8 @@ namespace Admin.Data
                 var client = new MongoClient(settings.Value.ConnectionString);
                 if (client != null)
                     _database = client.GetDatabase(settings.Value.Database);
+                BsonSerializer.LookupSerializer(typeof(MCQ));
+                BsonSerializer.LookupSerializer(typeof(MMCQ));
             }
             catch (Exception ex)
             {
@@ -25,9 +29,16 @@ namespace Admin.Data
 
         }
 
-        public IMongoCollection<Question> Questions => _database.GetCollection<Question>("Question");
+        public IMongoCollection<IQuestion> Questions => _database.GetCollection<IQuestion>("Question");
+		public IMongoCollection<QuestionConceptMap> QuestionConceptMap
+		{
+			get
+			{
+				return _database.GetCollection<QuestionConceptMap>("QuestionConceptMap");
+			}
+		}
 
-    }
+	}
     
     
 }

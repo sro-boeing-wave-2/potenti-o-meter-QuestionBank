@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.Models;
+using Potentiometer.Core.QuestionTypes;
 namespace Admin.Services
 {
     public interface IQuestionServices
     {
-        Task<List<Question>> GetAllQuestions();
-        Task<List<Question>> GetAllQuestionById(string questionid);
-        Task<List<Question>> GetAllQuestionsByDomain(string domain);
-        Task<List<Question>> GetAllQuestionsByDifficultyLevel(int difficultylevel);
+        Task<List<IQuestion>> GetAllQuestions();
+        Task<List<IQuestion>> GetAllQuestionById(string questionid);
+        Task<List<IQuestion>> GetAllQuestionsByDomain(string domain);
+        Task<List<IQuestion>> GetAllQuestionsByDifficultyLevel(int difficultylevel);
         Task<List<String>> GetAllDomain();
-        Task<Question> AddQuestion(Question question);
+        Task<IQuestion> AddQuestion(IQuestion question);
         Task<bool> DeleteQuestionById(string id);
         Task<bool> DeleteQuestionByDomain(string domain);
-        Task EditQuestion(string id, Question question);
-    }
+        Task EditQuestion(string id, IQuestion question);
+	    QuestionConceptMap CreateQuestionConceptMap();
+		Task<List<IQuestion>> GetAllQuestionsByConceptTag(string concepttag,string domain);
+		Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync(Double version, string domain);
+		
+	}
 }

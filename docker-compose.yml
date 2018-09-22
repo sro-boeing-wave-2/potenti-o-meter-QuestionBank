@@ -1,0 +1,13 @@
+version: "3"
+services:
+    web:
+        build: ./Admin/Admin
+        depends_on:
+            - db
+        labels:
+            - "SERVICE_NAME=QuestionBank"
+            - "SERVICE_TAGS=questionbanktag"
+        expose:
+            - "80"
+    db:
+        image: "mongo:latest"

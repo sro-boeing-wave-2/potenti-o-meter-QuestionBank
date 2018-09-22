@@ -74,13 +74,15 @@ namespace Admin.Services
 
         public async Task<bool> DeleteQuestionById(string id)
         {
-            DeleteResult actionResult = await _context.Questions.DeleteOneAsync(Builders<IQuestion>.Filter.Eq("QuestionId", id));
+            ObjectId objid = new ObjectId(id);
+            DeleteResult actionResult = await _context.Questions.DeleteOneAsync(Builders<IQuestion>.Filter.Eq("_id", objid));
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
         public async Task EditQuestion(string id, IQuestion question)
-        {    
-            var filter = Builders<IQuestion>.Filter.Eq(x => x.QuestionId, id);
+        {
+            ObjectId objid = new ObjectId(id);
+            var filter = Builders<IQuestion>.Filter.Eq("_id", objid);
             var result = await _context.Questions.FindOneAndReplaceAsync(filter, question);
         }
 		public QuestionConceptMap CreateQuestionConceptMap()

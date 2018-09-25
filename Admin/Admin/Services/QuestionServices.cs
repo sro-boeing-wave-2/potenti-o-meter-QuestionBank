@@ -51,7 +51,9 @@ namespace Admin.Services
 		}
 		public async Task<List<IQuestion>> GetAllQuestionById(string questionid)
         {
-            return await _context.Questions.Find(x => x.QuestionId == questionid).ToListAsync();
+            //return await _context.Questions.Find(x => x.QuestionId == questionid).ToListAsync();
+            var context = await _context.Questions.Find(x => true).ToListAsync();
+            return context.Where(a => a.QuestionId == questionid).ToList();
 
         }
 
@@ -88,7 +90,7 @@ namespace Admin.Services
 		public QuestionConceptMap CreateQuestionConceptMap()
 		{
 			QuestionConceptMap questionConceptMap = new QuestionConceptMap();
-			var factory = new ConnectionFactory() { HostName = "172.21.48.1", UserName = "preety", Password = "preety", Port = 5672 };
+			var factory = new ConnectionFactory() { HostName = "172.21.96.1", UserName = "preety", Password = "preety", Port = 5672 };
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
@@ -164,7 +166,7 @@ namespace Admin.Services
 			return questionConceptMap;
 		}
 
-		public async Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync(double version, string domain)
+		public async Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync(string domain)
 		{
 			var result= await _context.QuestionConceptMap.Find(x => true ).ToListAsync();
 			return result;

@@ -213,11 +213,11 @@ namespace Admin.Controllers
 			
 			return Ok(result);
 		}
-		[HttpGet("{questionConceptMap}/{domain}/{version}")]
-		public async Task<IActionResult> GetQuestionConceptMap(string domain , double version)
+		[HttpGet("{questionConceptMap}/{domain}")]
+		public async Task<IActionResult> GetQuestionConceptMap(string domain )
 		{
 
-			var result = await _questionService.GetDatabyVersionandDomainAsync(version, domain);
+			var result = await _questionService.GetDatabyVersionandDomainAsync( domain);
 			
 			return Ok(result);
 		}

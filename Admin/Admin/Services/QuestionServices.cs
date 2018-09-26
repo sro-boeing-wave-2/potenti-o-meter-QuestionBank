@@ -90,7 +90,8 @@ namespace Admin.Services
 		public QuestionConceptMap CreateQuestionConceptMap()
 		{
 			QuestionConceptMap questionConceptMap = new QuestionConceptMap();
-			var factory = new ConnectionFactory() { HostName = "172.21.96.1", UserName = "preety", Password = "preety", Port = 5672 };
+			string consulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
+			var factory = new ConnectionFactory() { HostName = consulIP, UserName = "preety", Password = "preety", Port = 5672 };
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{

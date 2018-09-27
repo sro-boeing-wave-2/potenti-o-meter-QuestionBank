@@ -13,4 +13,3 @@ services:
             - "/machine_config:/app/machine_config"
     db:
         image: "mongo:latest"
-     

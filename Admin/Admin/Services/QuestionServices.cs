@@ -169,7 +169,7 @@ namespace Admin.Services
 
 		public async Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync(string domain)
 		{
-			var result = await _context.QuestionConceptMap.Find(x => true).ToListAsync();
+			var result = await _context.QuestionConceptMap.Find(x => x.Domain == domain).ToListAsync();
 			return result;
 		}
 	}

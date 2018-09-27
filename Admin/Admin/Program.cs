@@ -22,6 +22,7 @@ namespace Admin
             {
                 Console.WriteLine(e);
             }
+            Console.WriteLine(System.Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4"));
             CreateWebHostBuilder(args).Build().Run();
         }
 

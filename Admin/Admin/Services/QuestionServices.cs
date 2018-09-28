@@ -102,8 +102,8 @@ namespace Admin.Services
 				//						 arguments: null);
 
 				var consumer = new EventingBasicConsumer(channel);
-				bool noAck = false;
-				BasicGetResult result = channel.BasicGet("Concepts", noAck);
+				bool autoAck = true;
+				BasicGetResult result = channel.BasicGet("Concepts", autoAck);
 				if (result == null)
 				{
 					Console.WriteLine("message can't be retrieved from queue");
@@ -158,7 +158,7 @@ namespace Admin.Services
 					}
 					questionConceptMap.questionIds = questionIds.ToArray();
 					_context.QuestionConceptMap.InsertOneAsync(questionConceptMap);
-					channel.BasicGet("Concepts", true);
+					//channel.BasicGet("Concepts", true);
 				}
 
 				Console.WriteLine(questionConceptMap);

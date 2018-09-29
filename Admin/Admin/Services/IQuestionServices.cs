@@ -20,6 +20,7 @@ namespace Admin.Services
 	    QuestionConceptMap CreateQuestionConceptMap();
 		Task<List<IQuestion>> GetAllQuestionsByConceptTag(string concepttag,string domain);
 		Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync( string domain);
-		
-	}
+        Task<List<IQuestion>> GetAllQuestionByIdlist(string[] questionid);
+
+    }
 }

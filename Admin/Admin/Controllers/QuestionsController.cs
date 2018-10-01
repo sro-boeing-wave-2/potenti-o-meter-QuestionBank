@@ -159,7 +159,28 @@ namespace Admin.Controllers
 
 			return Ok(result);
 		}
-		[HttpPut("{id}")]
+
+
+        [HttpGet("idlist/{idstring}")]
+        public async Task<IActionResult> GetQuestionIdlist([FromRoute] string idstring)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //return await _questionService.GetAllQuestionsByDomain(domain);
+            Console.WriteLine(idstring[0]);
+            string[] values = idstring.Replace("[", "").Replace("]", "").Replace("\"", "").Split(',');
+            Console.WriteLine(values[0]);
+            var questions = await _questionService.GetAllQuestionByIdlist(values);
+            return Ok(questions);
+
+        }
+
+
+
+        [HttpPut("{id}")]
 		public async Task<IActionResult> PutQuestion([FromRoute] string id, [FromBody] dynamic question)
 		{
 			if (!ModelState.IsValid)

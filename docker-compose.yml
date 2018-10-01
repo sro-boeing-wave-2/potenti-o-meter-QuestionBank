@@ -15,4 +15,5 @@ services:
             - .env
     db:
         image: "mongo:latest"
+        restart: always
         

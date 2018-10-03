@@ -183,5 +183,23 @@ namespace Admin.Services
 			var result = await _context.QuestionConceptMap.Find(x => x.Domain == domain && x.Version == latestVersion).ToListAsync();
 			return result;
 		}
-	}
+        public async Task<List<IQuestion>> GetAllQuestionByIdlist(string[] questionid)
+        {
+            //return await _context.Questions.Find(x => x.QuestionId == questionid).ToListAsync();
+            IQuestion addq;
+            var questionlist = new List<IQuestion>();
+            //Console.Write(string.IsNullOrEmpty(questionid.ToString()));
+            //foreach(string x in questionid)
+            //Console.WriteLine(string.IsNullOrEmpty(x));
+
+            var context = await _context.Questions.Find(x => true).ToListAsync();
+            foreach (string a in questionid)
+            {
+                addq = context.SingleOrDefault(b => b.QuestionId == a);
+                questionlist.Add(addq);
+            }
+            return questionlist;
+
+        }
+    }
 }

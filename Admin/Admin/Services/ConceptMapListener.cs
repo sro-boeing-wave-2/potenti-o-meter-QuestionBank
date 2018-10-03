@@ -22,7 +22,7 @@ namespace Admin.Services
 		{
 			_questionService = questionService;	
 	}
-		public QuestionConceptMap CreateQuestionConceptMap()
+		public void CreateQuestionConceptMap()
 		{
 			QuestionConceptMap questionConceptMap = new QuestionConceptMap();
 			string consulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
@@ -40,7 +40,7 @@ namespace Admin.Services
 				consumer.Received += (model, ea) =>
 				{
 					var message = ea.Body;
-					
+					Console.WriteLine(message);
 					var body = Encoding.UTF8.GetString(message);
 					ConceptMapData conceptmap = JsonConvert.DeserializeObject<ConceptMapData>(body);
 					questionConceptMap.Domain = conceptmap.Domain;
@@ -110,7 +110,7 @@ namespace Admin.Services
 									 autoAck: true,
 									 consumer: consumer);
 
-				return questionConceptMap;
+				
 			}
 		}
 	}

@@ -14,10 +14,8 @@ namespace Admin.Services
 	public class ConceptMapListener
 	{
 		private readonly IQuestionServices _questionService;
-		public ConceptMapListener()
-		{
 
-		}
+		
 		public ConceptMapListener(IQuestionServices questionService)
 		{
 			_questionService = questionService;	

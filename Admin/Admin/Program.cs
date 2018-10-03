@@ -12,8 +12,13 @@ using Microsoft.Extensions.Logging;
 namespace Admin
 {
     public class Program
+
     {
-        public static void Main(string[] args)
+		private readonly static IQuestionServices _questionService;
+
+
+		
+		public static void Main(string[] args)
         {
             try 
             {
@@ -24,7 +29,9 @@ namespace Admin
                 Console.WriteLine(e);
             }
             Console.WriteLine(System.Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4"));
-			ConceptMapListener conceptMapListener = new ConceptMapListener();
+			
+			ConceptMapListener conceptMapListener = new ConceptMapListener(_questionService);
+			
 			conceptMapListener.CreateQuestionConceptMap();
 
 			CreateWebHostBuilder(args).Build().Run();

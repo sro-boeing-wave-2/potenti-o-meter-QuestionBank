@@ -65,8 +65,6 @@ namespace Admin.Services
 		public async Task<IQuestion> AddQuestion(IQuestion question)
 		{
 			await _context.Questions.InsertOneAsync(question);
-			var c = await GetDatabyVersionandDomainAsync(question.Domain);
-			QuestionConceptMap latestConceptMap = JsonConvert.DeserializeObject<QuestionConceptMap>(c.ToString());
 			return question;
 		}
 

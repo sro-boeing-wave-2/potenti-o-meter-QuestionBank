@@ -17,7 +17,7 @@ namespace Admin.Services
         Task<bool> DeleteQuestionById(string id);
         Task<bool> DeleteQuestionByDomain(string domain);
         Task EditQuestion(string id, IQuestion question);
-	    QuestionConceptMap CreateQuestionConceptMap();
+	    QuestionConceptMap CreateQuestionConceptMap(QuestionConceptMap questionConceptMap);
 		Task<List<IQuestion>> GetAllQuestionsByConceptTag(string concepttag,string domain);
 		Task<List<QuestionConceptMap>> GetDatabyVersionandDomainAsync( string domain);
         Task<List<IQuestion>> GetAllQuestionByIdlist(string[] questionid);

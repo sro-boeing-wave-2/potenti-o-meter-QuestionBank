@@ -222,18 +222,18 @@ namespace Admin.Controllers
 
 			return Ok(question);
 		}
-		[HttpPost("{questionConceptMap}")]
-		public async Task<IActionResult> PostQuestionConceptMap()
-		{
+		//[HttpPost("{questionConceptMap}")]
+		//public async Task<IActionResult> PostQuestionConceptMap()
+		//{
 
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-			var result =  _questionService.CreateQuestionConceptMap();
+		//	if (!ModelState.IsValid)
+		//	{
+		//		return BadRequest(ModelState);
+		//	}
+		//	var result =  _questionService.CreateQuestionConceptMap();
 			
-			return Ok(result);
-		}
+		//	return Ok(result);
+		//}
 		[HttpGet("{questionConceptMap}/{domain}")]
 		public async Task<IActionResult> GetQuestionConceptMap(string domain )
 		{

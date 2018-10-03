@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +24,10 @@ namespace Admin
                 Console.WriteLine(e);
             }
             Console.WriteLine(System.Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4"));
-            CreateWebHostBuilder(args).Build().Run();
+			ConceptMapListener conceptMapListener = new ConceptMapListener();
+			conceptMapListener.CreateQuestionConceptMap();
+
+			CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

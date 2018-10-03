@@ -89,89 +89,9 @@ namespace Admin.Services
 			var filter = Builders<IQuestion>.Filter.Eq("_id", objid);
 			var result = await _context.Questions.FindOneAndReplaceAsync(filter, question);
 		}
-		public QuestionConceptMap CreateQuestionConceptMap()
+		public QuestionConceptMap CreateQuestionConceptMap(QuestionConceptMap questionConceptMap)
 		{
-			QuestionConceptMap questionConceptMap = new QuestionConceptMap();
-			string consulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
-			var factory = new ConnectionFactory() { HostName = consulIP, UserName = "preety", Password = "preety", Port = 5672 };
-			using (var connection = factory.CreateConnection())
-			using (var channel = connection.CreateModel())
-			{
-
-				var consumer = new EventingBasicConsumer(channel);
-				bool autoAck = true;
-				BasicGetResult result = channel.BasicGet("Concepts", autoAck);
-				if (result == null)
-				{
-					Console.WriteLine("message can't be retrieved from queue");
-				}
-				else
-				{
-					IBasicProperties props = result.BasicProperties;
-					var body = Encoding.UTF8.GetString(result.Body);
-					ConceptMapData conceptmap = JsonConvert.DeserializeObject<ConceptMapData>(body);
-					questionConceptMap.Domain = conceptmap.Domain;
-					questionConceptMap.Version = conceptmap.Version;
-					questionConceptMap.concepttriplet = conceptmap.Triplet;
-					questionConceptMap.concepts = conceptmap.Concepts;
-					questionConceptMap.contentConceptTriplet = conceptmap.contentConceptTriplet;
-					List<QuestionConceptTriplet> t = new List<QuestionConceptTriplet>();
-
-					foreach (string concept in conceptmap.Concepts)
-					{
-						var questionbyConcept = GetAllQuestionsByConceptTag(concept, conceptmap.Domain).Result;
-
-
-						foreach (IQuestion question in questionbyConcept)
-						{
-
-							QuestionConceptTriplet t1 = new QuestionConceptTriplet();
-
-							Concept source = new Concept();
-							Question target = new Question();
-							Predicate relationship = new Predicate();
-							source.Name = concept;
-							source.Domain = conceptmap.Domain;
-							target.QuestionId = question.QuestionId;
-							relationship.Name = question.Taxonomy;
-							t1.Source = source;
-							t1.Target = target;
-							t1.Relationship = relationship;
-							t.Add(t1);
-
-
-
-						}
-					}
-					questionConceptMap.questionconceptTriplet = t.ToArray();
-
-					var questionbydomain = GetAllQuestionsByDomain(conceptmap.Domain).Result;
-					List<String> questionIds = new List<String>();
-
-					foreach (IQuestion quest in questionbydomain)
-					{
-						questionIds.Add(quest.QuestionId);
-
-
-					}
-					questionConceptMap.questionIds = questionIds.ToArray();
-					_context.QuestionConceptMap.InsertOneAsync(questionConceptMap);
-					//channel.BasicGet("Concepts", true);
-				}
-				channel.QueueDeclare(queue: "ConceptMap",
-										 durable: false,
-										 exclusive: false,
-										 autoDelete: false,
-										 arguments: null);
-				string bodydata = JsonConvert.SerializeObject(questionConceptMap);
-				channel.BasicPublish(exchange: "",
-									 routingKey: "ConceptMap",
-									 mandatory: true,
-									 basicProperties: null,
-									 body: Encoding.UTF8.GetBytes(bodydata));
-
-
-			}
+			_context.QuestionConceptMap.InsertOneAsync(questionConceptMap);
 			return questionConceptMap;
 		}
 

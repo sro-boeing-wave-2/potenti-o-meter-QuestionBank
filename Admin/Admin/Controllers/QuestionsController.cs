@@ -234,7 +234,7 @@ namespace Admin.Controllers
 			
 		//	return Ok(result);
 		//}
-		[HttpGet("{questionConceptMap}/{domain}")]
+		[HttpGet("questionConceptMap/{domain}")]
 		public async Task<IActionResult> GetQuestionConceptMap(string domain )
 		{
 

@@ -65,6 +65,8 @@ namespace Admin.Services
 		public async Task<IQuestion> AddQuestion(IQuestion question)
 		{
 			await _context.Questions.InsertOneAsync(question);
+			var c = await GetDatabyVersionandDomainAsync(question.Domain);
+			QuestionConceptMap latestConceptMap = JsonConvert.DeserializeObject<QuestionConceptMap>(c.ToString());
 			return question;
 		}
 
@@ -95,11 +97,6 @@ namespace Admin.Services
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
-				//channel.QueueDeclare(queue: "Concepts",
-				//						 durable: false,
-				//						 exclusive: false,
-				//						 autoDelete: false,
-				//						 arguments: null);
 
 				var consumer = new EventingBasicConsumer(channel);
 				bool autoAck = true;
@@ -117,6 +114,7 @@ namespace Admin.Services
 					questionConceptMap.Version = conceptmap.Version;
 					questionConceptMap.concepttriplet = conceptmap.Triplet;
 					questionConceptMap.concepts = conceptmap.Concepts;
+					questionConceptMap.contentConceptTriplet = conceptmap.contentConceptTriplet;
 					List<QuestionConceptTriplet> t = new List<QuestionConceptTriplet>();
 
 					foreach (string concept in conceptmap.Concepts)
@@ -160,8 +158,18 @@ namespace Admin.Services
 					_context.QuestionConceptMap.InsertOneAsync(questionConceptMap);
 					//channel.BasicGet("Concepts", true);
 				}
+				channel.QueueDeclare(queue: "ConceptMap",
+										 durable: false,
+										 exclusive: false,
+										 autoDelete: false,
+										 arguments: null);
+				string bodydata = JsonConvert.SerializeObject(questionConceptMap);
+				channel.BasicPublish(exchange: "",
+									 routingKey: "ConceptMap",
+									 mandatory: true,
+									 basicProperties: null,
+									 body: Encoding.UTF8.GetBytes(bodydata));
 
-				Console.WriteLine(questionConceptMap);
 
 			}
 			return questionConceptMap;
@@ -172,7 +180,7 @@ namespace Admin.Services
 			var result1 = await _context.QuestionConceptMap.Find(x => x.Domain == domain).ToListAsync();
 			var version = result1.Select(x => x.Version).ToArray();
 			double latestVersion = version.Max();
-			var result =await _context.QuestionConceptMap.Find(x => x.Domain == domain && x.Version == latestVersion).ToListAsync();
+			var result = await _context.QuestionConceptMap.Find(x => x.Domain == domain && x.Version == latestVersion).ToListAsync();
 			return result;
 		}
 	}

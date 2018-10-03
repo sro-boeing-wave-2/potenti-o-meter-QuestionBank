@@ -11,6 +11,7 @@ namespace Admin.Models
 		public double Version { get; set; }
 		public string Domain { get; set; }
 		public ConceptTriplet[] Triplet { get; set; }
+		public ContentTriplet[] contentConceptTriplet { get; set; }
 		public String[] Concepts { get; set; }
 	}
 }

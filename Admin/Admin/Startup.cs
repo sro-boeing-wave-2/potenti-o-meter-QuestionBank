@@ -45,6 +45,7 @@ namespace Admin
                 Options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
             services.AddTransient<IQuestionServices, QuestionServices>();
+            services.AddSingleton<IConceptMapListener, ConceptMapListenerService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -53,7 +54,7 @@ namespace Admin
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConceptMapListener conceptMapListener)
         {
             if (env.IsDevelopment())
             {
